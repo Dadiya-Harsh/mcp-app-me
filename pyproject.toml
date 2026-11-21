@@ -1,0 +1,22 @@
+[project]
+name = "mcp-app-me"
+version = "0.0.1"
+description = "MCP server for my portfolio."
+readme = "README.md"
+requires-python = ">=3.14"
+authors = [{ name = "Harsh Dadiya", email = "harshdadiya@gmail.com" }]
+dependencies = [
+    "fastapi>=0.165.0",
+    "mcp>=2.3.0",
+    "mypy>=2.4.1",
+    "python-dotenv>=1.2.4",
+    "ruff>=0.17.6",
+    "uvicorn>=0.54.0",
+]
+
+[project.urls]
+Repository = "https://github.com/Dadiya-Harsh/mcp-app-me"
+"Bug Tracker" = "https://github.com/Dadiya-Harsh/mcp-app-me/issues"
+
+[tool.uv]
+package = false

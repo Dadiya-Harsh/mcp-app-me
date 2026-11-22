@@ -43,19 +43,14 @@ async def test_resource_list(client: Caller) -> None:
     listed = {
         str(r.uri): r.mime_type for r in (await client.list_resources()).resources
     }
-    assert listed == STATIC_URIS
+    # the ui:// page is listed too (its own tests are in test_ui.py)
+    assert listed == {
+        **STATIC_URIS,
+        "ui://portfolio/app.html": "text/html;profile=mcp-app",
+    }
     templates = (await client.list_resource_templates()).resource_templates
     assert [(t.uri_template, t.mime_type) for t in templates] == [
         ("portfolio://case-studies/{id}", "text/markdown")
-    ]
-
-
-async def test_nothing_in_the_list_is_a_ui_resource(client: Caller) -> None:
-    # ui://portfolio/app.html arrives in M4
-    assert not [
-        r
-        for r in (await client.list_resources()).resources
-        if str(r.uri).startswith("ui:")
     ]
 
 

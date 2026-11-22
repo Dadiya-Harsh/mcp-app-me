@@ -23,6 +23,7 @@ from urllib.parse import urlsplit
 
 import httpx
 
+from portfolio_mcp.content.markdown import absolute_links
 from portfolio_mcp.content.models import CONTENT_VERSION, Content
 from portfolio_mcp.settings import Settings, load_settings
 
@@ -102,7 +103,7 @@ class ContentLoader:
         return await self._cached("content.json", self._load_content)
 
     async def case_study_md(self, case_study_id: str) -> str:
-        """Markdown of one published case study."""
+        """Markdown of one published case study, with site links made absolute."""
         content = await self.content()
         study = next((s for s in content.case_studies if s.id == case_study_id), None)
         if study is None:
@@ -112,9 +113,19 @@ class ContentLoader:
         path = urlsplit(study.markdown_url).path
 
         async def load() -> str:
-            return await self._read_text(path, fixture_name=f"{case_study_id}.md")
+            raw = await self._read_text(path, fixture_name=f"{case_study_id}.md")
+            # images and links in the .md point at the site (/images/...); make them
+            # full URLs so they still work in a chat window
+            return absolute_links(raw, content.site_url)
 
         return await self._cached(f"md:{case_study_id}", load)
+
+    async def llms_full(self) -> str:
+        """The portfolio's /llms-full.txt, as plain text."""
+        return await self._cached(
+            "llms-full.txt",
+            lambda: self._read_text("/llms-full.txt", fixture_name="llms-full.txt"),
+        )
 
     # -- cache -----------------------------------------------------------
 

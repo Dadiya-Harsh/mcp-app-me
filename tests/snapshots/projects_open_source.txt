@@ -1,0 +1,4 @@
+Open source
+- Found and fixed a startup bug in OpenMontage: OpenMontage is an open-source agent framework with 81K stars. One of its skills was skipped on startup because its SKILL.md had no YAML frontmatter, and the video-toolkit skill was named in two different ways (kebab-case and snake_case). I reported it, then sent a fix that got merged.
+  Tech: Python, YAML, Agent Frameworks
+  View issue #192: https://github.com/OpenMontageInc/OpenMontage/issues/192 | View PR #191: https://github.com/OpenMontageInc/OpenMontage/pull/191

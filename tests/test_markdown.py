@@ -5,7 +5,11 @@ from pathlib import Path
 
 import pytest
 
-from portfolio_mcp.content.markdown import parse_case_study, split_sections
+from portfolio_mcp.content.markdown import (
+    absolute_links,
+    parse_case_study,
+    split_sections,
+)
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -99,3 +103,69 @@ def test_no_headings_gives_no_sections() -> None:
     parsed = parse_case_study("just text")
     assert parsed.sections == []
     assert parsed.steps == []
+
+
+# -- the `---` line between parts of the page ----------------------------------
+
+
+def test_a_rule_at_the_end_of_a_section_is_dropped() -> None:
+    md = "## Overview\nText.\n\n---\n\n## The Problem\nMore.\n"
+    overview, problem = split_sections(md)
+    assert overview.markdown == "Text."
+    assert problem.markdown == "More."
+
+
+def test_the_voice_agent_fixture_sections_do_not_end_with_a_rule() -> None:
+    parsed = parse_case_study((FIXTURES / "voice-agent.md").read_text())
+    for section in parsed.sections:
+        assert not section.markdown.rstrip().endswith("---"), section.id
+    for step in parsed.steps:
+        assert not step.markdown.rstrip().endswith("---"), step.number
+
+
+def test_a_rule_in_the_middle_of_a_section_stays() -> None:
+    (overview,) = split_sections("## Overview\nOne.\n\n---\n\nTwo.\n")
+    assert overview.markdown == "One.\n\n---\n\nTwo."
+
+
+# -- absolute links ----------------------------------------------------------------
+
+SITE = "https://www.harshdadiya.in"
+
+
+def test_relative_images_and_links_become_absolute() -> None:
+    md = "![Diagram](/images/a.png) and [other](/case-studies/x) and [pdf](/resume/r.pdf)."
+    assert absolute_links(md, SITE) == (
+        f"![Diagram]({SITE}/images/a.png) and [other]({SITE}/case-studies/x) "
+        f"and [pdf]({SITE}/resume/r.pdf)."
+    )
+
+
+def test_trailing_slash_on_the_site_url_is_fine() -> None:
+    assert absolute_links("[x](/a)", SITE + "/") == f"[x]({SITE}/a)"
+
+
+@pytest.mark.parametrize(
+    "md",
+    [
+        "[x](https://example.test/a)",
+        "[x](http://example.test/a)",
+        "[x](//cdn.example.test/a)",
+        "[x](#section)",
+        "[x](mailto:someone@example.test)",
+        "[x](relative/path.png)",
+        "no links here",
+    ],
+)
+def test_other_targets_are_left_alone(md: str) -> None:
+    assert absolute_links(md, SITE) == md
+
+
+def test_links_inside_code_fences_are_left_alone() -> None:
+    md = "```\n[x](/a)\n```\n[y](/b)"
+    assert absolute_links(md, SITE) == f"```\n[x](/a)\n```\n[y]({SITE}/b)"
+
+
+def test_absolute_links_keeps_line_breaks_as_they_are() -> None:
+    md = "a\n\n[x](/a)\n"
+    assert absolute_links(md, SITE) == f"a\n\n[x]({SITE}/a)\n"

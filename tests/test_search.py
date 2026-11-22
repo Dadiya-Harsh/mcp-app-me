@@ -102,3 +102,13 @@ def test_snippets_are_short_and_single_line(content: Content) -> None:
 def test_results_come_from_the_content_only(content: Content) -> None:
     for r in search(content, "wappnet", limit=10):
         assert r.type in {"experience", "profile", "case-study", "project"}
+
+
+def test_snippets_have_no_image_syntax(
+    content: Content, markdown: dict[str, str]
+) -> None:
+    results = search(content, "voice agent architecture", markdown, limit=10)
+    assert results
+    for r in results:
+        assert "![" not in r.snippet
+        assert "](/" not in r.snippet

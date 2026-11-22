@@ -1,0 +1,18 @@
+Recent
+- SecureWorkspace: An open-source encrypted backup and sync app. Python core, Google Drive storage, Windows, Ubuntu and Android.
+  View on GitHub: https://github.com/Dadiya-Harsh/SecureWorkspace
+
+Open source
+- Found and fixed a startup bug in OpenMontage: OpenMontage is an open-source agent framework with 81K stars. One of its skills was skipped on startup because its SKILL.md had no YAML frontmatter, and the video-toolkit skill was named in two different ways (kebab-case and snake_case). I reported it, then sent a fix that got merged.
+  Tech: Python, YAML, Agent Frameworks
+  View issue #192: https://github.com/OpenMontageInc/OpenMontage/issues/192 | View PR #191: https://github.com/OpenMontageInc/OpenMontage/pull/191
+
+Earlier
+- Cure Now: An AI-powered medical chatbot using Google's Gemini AI, with Pinecone for knowledge base search.
+  GitHub: https://github.com/Dadiya-Harsh/cure-now/
+- SQL Agent Tool: An agent that turns natural language questions into SQL queries.
+  GitHub: https://github.com/Dadiya-Harsh/sql-tool/
+- MCP Implementation: A Model Context Protocol implementation for LLM communication, with multiple transport layers.
+  GitHub: https://github.com/Dadiya-Harsh/MCP-DEMO/
+- AQI Monitoring: An air quality monitoring system with real time and historical trends.
+  GitHub: https://github.com/Dadiya-Harsh/aqi-monitoring

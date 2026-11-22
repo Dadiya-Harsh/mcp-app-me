@@ -2,6 +2,7 @@
 
 from typing import Any
 
+from mcp.server.apps import Apps
 from mcp.server.mcpserver import MCPServer
 from mcp.types import CallToolResult
 
@@ -9,6 +10,7 @@ from portfolio_mcp import text
 from portfolio_mcp.content.experience import experience_years, format_experience_years
 from portfolio_mcp.deps import Deps
 from portfolio_mcp.tools._common import READ_ONLY, dump, guarded, ok
+from portfolio_mcp.ui_html import UI_URI
 
 # What get_profile returns as structured data (the contract's names), in this order.
 # Work history, education and certifications are left out on purpose: they are in the
@@ -60,8 +62,11 @@ async def resume_result(deps: Deps) -> CallToolResult:
     )
 
 
-def register(mcp: MCPServer, deps: Deps) -> None:
-    @mcp.tool(
+def register_ui(apps: Apps, deps: Deps) -> None:
+    """get_profile is a UI tool: the host shows the profile card from `UI_URI`."""
+
+    @apps.tool(
+        resource_uri=UI_URI,
         name="get_profile",
         title="Harsh's profile",
         description=(
@@ -74,6 +79,8 @@ def register(mcp: MCPServer, deps: Deps) -> None:
     async def get_profile() -> CallToolResult:
         return await guarded(profile_result(deps))
 
+
+def register(mcp: MCPServer, deps: Deps) -> None:
     @mcp.tool(
         name="get_resume",
         title="Harsh's resume",

@@ -1,11 +1,13 @@
 """Builds the MCP server: tools, resources and the instructions every client gets.
 
-Prompts come in M3 and the UI (MCP Apps) in M4.
+Prompts come in M3. The UI (MCP Apps) is one `ui://` page; tools that show it are
+registered on `Apps` (see `profile.register_ui`).
 """
 
 from collections.abc import Callable
 from datetime import date
 
+from mcp.server.apps import Apps, ResourceCsp
 from mcp.server.mcpserver import MCPServer
 
 from portfolio_mcp import resources
@@ -22,6 +24,10 @@ from portfolio_mcp.tools import (
     writing,
 )
 from portfolio_mcp.tools._common import READ_ONLY
+from portfolio_mcp.ui_html import UI_URI, load_ui_html
+
+# Where the UI may load images from (the photo in content.json is on the live site).
+UI_RESOURCE_DOMAIN = "https://www.harshdadiya.in"
 
 INSTRUCTIONS = """\
 This server is Harsh Dadiya's portfolio. Use it to answer questions about him: who he is, what he has built and how to reach him.
@@ -52,12 +58,26 @@ def build_server(
         today=today,
     )
 
+    # UI tools have to be on `apps` before the server is built: extensions are fixed
+    # when MCPServer is created.
+    apps = Apps()
+    profile.register_ui(apps, deps)
+    apps.add_html_resource(
+        UI_URI,
+        load_ui_html(),
+        title="Harsh's portfolio",
+        # The profile photo (and later images) load from the portfolio site only.
+        csp=ResourceCsp(resource_domains=[UI_RESOURCE_DOMAIN]),
+        prefers_border=False,
+    )
+
     mcp = MCPServer(
         name="harsh-portfolio",
         title="Harsh Dadiya's portfolio",
         version="0.1.0",
         website_url="https://www.harshdadiya.in",
         instructions=INSTRUCTIONS,
+        extensions=[apps],
     )
 
     # M0 leftover: lets the connection be tested without touching any content.

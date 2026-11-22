@@ -3,14 +3,8 @@ import { Button } from "../components/Button";
 import { Card } from "../components/Card";
 import { Chip } from "../components/Chip";
 import { StatTile } from "../components/StatTile";
+import type { HostActions } from "../host";
 import type { ProfileData } from "../types";
-
-export type HostActions = {
-  /** Opens a URL through the host (the iframe can't navigate on its own). */
-  openLink: (url: string) => void;
-  /** Sends a message as if the visitor typed it. Rejects if the host doesn't allow it. */
-  sendMessage: (text: string) => Promise<void>;
-};
 
 const LABEL: React.CSSProperties = {
   fontSize: 11,
@@ -59,9 +53,17 @@ function Photo({ src, name }: { src: string; name: string }) {
   return <img src={src} alt={name} style={{ ...style, objectFit: "cover" }} onError={() => setFailed(true)} />;
 }
 
-export function Profile({ data, host }: { data: ProfileData; host: HostActions }) {
+type Props = {
+  data: ProfileData;
+  host: HostActions;
+  /** Opens the case study list inside this iframe. Rejects if it can't. */
+  onCaseStudies: () => Promise<void>;
+};
+
+export function Profile({ data, host, onCaseStudies }: Props) {
   // If the host won't take a message, tell the visitor what to ask instead.
   const [hint, setHint] = useState<string | null>(null);
+  const [opening, setOpening] = useState(false);
   const ask = (text: string) => {
     setHint(null);
     host.sendMessage(text).catch(() => setHint(`Ask your assistant: "${text}"`));
@@ -155,8 +157,19 @@ export function Profile({ data, host }: { data: ProfileData; host: HostActions }
       )}
 
       <div style={{ padding: "24px 28px 26px", display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
-        <Button variant="primary" onClick={() => ask("Show me Harsh's case studies")}>
-          See case studies
+        <Button
+          variant="primary"
+          onClick={() => {
+            if (opening) return;
+            setHint(null);
+            setOpening(true);
+            // If the host won't let the page call the server, fall back to a chat message.
+            onCaseStudies()
+              .catch(() => ask("Show me Harsh's case studies"))
+              .finally(() => setOpening(false));
+          }}
+        >
+          {opening ? "Loading…" : "See case studies"}
         </Button>
         <Button href={links.resume} onOpen={host.openLink}>
           Resume

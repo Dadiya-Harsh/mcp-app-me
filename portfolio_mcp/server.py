@@ -62,6 +62,8 @@ def build_server(
     # when MCPServer is created.
     apps = Apps()
     profile.register_ui(apps, deps)
+    case_studies.register_ui(apps, deps)
+    projects.register_ui(apps, deps)
     apps.add_html_resource(
         UI_URI,
         load_ui_html(),
@@ -89,7 +91,7 @@ def build_server(
     def ping() -> str:
         return "ok"
 
-    for module in (profile, case_studies, projects, writing, search, contact):
+    for module in (profile, writing, search, contact):
         module.register(mcp, deps)
     resources.register(mcp, deps)
     return mcp

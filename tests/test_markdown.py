@@ -59,18 +59,20 @@ def test_unknown_heading_is_kept_with_the_section_above(
     assert "Lessons" in caplog.text
 
 
-def test_generative_video_fixture_has_the_two_old_headings(
+def test_generative_video_fixture_has_all_five_sections(
     caplog: pytest.LogCaptureFixture,
 ) -> None:
-    # This fixture is the portfolio file from before phase P3, which renames two headings.
-    # Until then both old headings stay inside "System Architecture".
+    # The fixture is the portfolio file after phase P3 (the two headings were renamed).
     with caplog.at_level(logging.WARNING):
         parsed = parse_case_study((FIXTURES / "generative-video.md").read_text())
-    assert [s.id for s in parsed.sections] == ["overview", "problem", "architecture"]
-    architecture = parsed.sections[2].markdown
-    assert "## Technical Hurdles & Trade-offs" in architecture
-    assert "## Results & Impact" in architecture
-    assert "Technical Hurdles & Trade-offs" in caplog.text
+    assert [s.id for s in parsed.sections] == [
+        "overview",
+        "problem",
+        "architecture",
+        "hard",
+        "result",
+    ]
+    assert caplog.text == ""
     assert [s.number for s in parsed.steps] == [1, 2, 3]
 
 

@@ -28,3 +28,49 @@ export type ProfileData = {
   };
   photo: string;
 };
+
+// What list_case_studies, get_case_study and list_projects return as structuredContent.
+// Keep in step with portfolio_mcp/tools/case_studies.py and projects.py.
+
+export type CaseStudyMeta = {
+  id: string;
+  type: string;
+  title: string;
+  subtitle: string;
+  role: string;
+  team: string;
+  duration: string;
+  techStack: string[];
+  desc: string;
+  bullets: string[];
+  url: string;
+};
+
+export type CaseStudyListData = { caseStudies: CaseStudyMeta[]; siteUrl?: string };
+
+export type SectionId = "overview" | "problem" | "architecture" | "hard" | "result";
+
+export type StudySection = { id: SectionId; heading: string; markdown: string };
+export type StudyStep = { number: number; title: string; markdown: string };
+
+export type CaseStudyData = CaseStudyMeta & {
+  requestedSection: SectionId | "all";
+  sections: StudySection[];
+  steps: StudyStep[];
+};
+
+export type Project = {
+  title: string;
+  description: string;
+  links: Link[];
+  technologies?: string[];
+  repoStars?: string;
+};
+
+export type ProjectGroup = "recent" | "openSource" | "earlier";
+
+export type ProjectsData = {
+  group: "all" | ProjectGroup;
+  projects: Record<ProjectGroup, Project[]>;
+  siteUrl?: string;
+};

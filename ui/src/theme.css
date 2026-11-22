@@ -17,6 +17,8 @@
   --ok-bg: #f0fdf4;
   --ok-text: #166534;
   --ok-dot: #16a34a;
+  --tag-bg: #fdf0ea;
+  --tag-text: #a23810;
   --focus: #1d6fe0;
   --radius-card: 20px;
   --radius-tile: 14px;
@@ -40,6 +42,8 @@
   --ok-bg: rgba(34, 197, 94, 0.14);
   --ok-text: #86efac;
   --ok-dot: #4ade80;
+  --tag-bg: rgba(240, 104, 48, 0.16);
+  --tag-text: #ffb08a;
   --focus: #6ea8ff;
   color-scheme: dark;
 }
@@ -61,6 +65,8 @@
     --ok-bg: rgba(34, 197, 94, 0.14);
     --ok-text: #86efac;
     --ok-dot: #4ade80;
+    --tag-bg: rgba(240, 104, 48, 0.16);
+    --tag-text: #ffb08a;
     --focus: #6ea8ff;
     color-scheme: dark;
   }

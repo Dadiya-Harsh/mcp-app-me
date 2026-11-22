@@ -2,19 +2,21 @@
 
 from typing import Annotated, Literal
 
-from mcp.server.mcpserver import MCPServer
+from mcp.server.apps import Apps
 from mcp.types import CallToolResult
 from pydantic import Field
 
 from portfolio_mcp import text
 from portfolio_mcp.deps import Deps
 from portfolio_mcp.tools._common import READ_ONLY, dump, guarded, ok
+from portfolio_mcp.ui_html import UI_URI
 
 Group = Literal["all", "recent", "openSource", "earlier"]
 
 
 async def projects_result(deps: Deps, group: Group) -> CallToolResult:
-    projects = (await deps.loader.content()).projects
+    content = await deps.loader.content()
+    projects = content.projects
     shown = dump(projects)
     # All three keys are always there, so a screen can rely on them. A group that wasn't
     # asked for is an empty list.
@@ -22,11 +24,18 @@ async def projects_result(deps: Deps, group: Group) -> CallToolResult:
         key: shown[key] if group in ("all", key) else []
         for key in ("recent", "openSource", "earlier")
     }
-    return ok(text.projects(projects, group), {"group": group, "projects": data})
+    return ok(
+        text.projects(projects, group),
+        # siteUrl is for the UI's "All on site" link
+        {"group": group, "projects": data, "siteUrl": content.site_url},
+    )
 
 
-def register(mcp: MCPServer, deps: Deps) -> None:
-    @mcp.tool(
+def register_ui(apps: Apps, deps: Deps) -> None:
+    """list_projects shows the project explorer."""
+
+    @apps.tool(
+        resource_uri=UI_URI,
         name="list_projects",
         title="Harsh's projects",
         description=(

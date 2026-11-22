@@ -1,0 +1,294 @@
+{
+  "version": 1,
+  "generatedAt": "2026-11-22T06:34:09Z",
+  "siteUrl": "https://www.harshdadiya.in",
+  "profile": {
+    "name": "Harsh Dadiya",
+    "title": "Associate AI Engineer",
+    "location": "Ahmedabad",
+    "careerStart": "2025-01",
+    "openToRoles": true,
+    "openToRolesLabel": "Open to AI Engineer roles",
+    "headline": "I ship production AI systems.",
+    "summary": "Associate AI Engineer based in Ahmedabad. I build voice agents, RAG pipelines and MCP-based agent workflows in Python, and get them running in production.",
+    "tagline": "Building useful AI for a better tomorrow.",
+    "focus": [
+      {
+        "title": "Voice AI",
+        "description": "Real-time voice agents with tool use",
+        "href": "/case-studies/voice-agent"
+      },
+      {
+        "title": "RAG pipelines",
+        "description": "Ingest, index and retrieve business documents"
+      },
+      {
+        "title": "MCP servers",
+        "description": "Exposing tools and data to AI agents",
+        "href": "/projects"
+      },
+      {
+        "title": "Multi-agent workflows",
+        "description": "Specialized agents with review checkpoints",
+        "href": "/case-studies/generative-video"
+      },
+      {
+        "title": "AWS deployment",
+        "description": "Lambda, ECS, S3, RDS, etc."
+      },
+      {
+        "title": "Chat systems",
+        "description": "Domain-specific assistants for teams and customers"
+      }
+    ],
+    "stats": [
+      {
+        "value": "OpenMontage",
+        "label": "open-source contributor · 81K★ repo"
+      },
+      {
+        "value": "500+",
+        "label": "documents indexed in RAG systems"
+      }
+    ],
+    "photo": "/images/profile.jpg",
+    "email": "harshdadiya@gmail.com",
+    "links": {
+      "github": "https://github.com/Dadiya-Harsh",
+      "linkedin": "https://www.linkedin.com/in/harsh-dadiya/",
+      "medium": "https://medium.com/@harshdadiya",
+      "resume": "/resume",
+      "resumePdf": "/resume/Harsh_Dadiya_Resume.pdf",
+      "resumeDocx": "/resume/Harsh_Dadiya_Resume.docx",
+      "contact": "/contact",
+      "booking": null
+    },
+    "nowBuilding": {
+      "show": true,
+      "name": "SecureWorkspace",
+      "description": "An open-source encrypted backup and sync app. Python core, Google Drive storage, Windows, Ubuntu and Android.",
+      "repoUrl": "https://github.com/Dadiya-Harsh/SecureWorkspace"
+    },
+    "experience": [
+      {
+        "role": "Associate AI Engineer",
+        "org": "Wappnet Systems",
+        "orgUrl": "https://wappnet.com",
+        "period": "July 2025 – Present",
+        "points": [
+          "Building and shipping production-grade AI features and tools.",
+          "Working on generative long-form video pipelines using LLMs, Remotion and AWS.",
+          "Integrated OpenAI Realtime API for voice agents and conversational AI systems.",
+          "Developing RAG pipelines and multi-agent workflows for business applications."
+        ],
+        "tags": [
+          "Python",
+          "FastAPI",
+          "AWS",
+          "OpenAI",
+          "RAG",
+          "Agents"
+        ]
+      },
+      {
+        "role": "AI/ML Intern",
+        "org": "Wappnet Systems",
+        "orgUrl": "https://wappnet.com",
+        "period": "Jan 2025 – July 2025",
+        "points": [
+          "Worked on internal AI tools and automation systems.",
+          "Built and evaluated RAG pipelines for document understanding.",
+          "Contributed to generative video workflows and data processing tools.",
+          "Explored OpenAI APIs and multimodal AI capabilities."
+        ],
+        "tags": [
+          "Python",
+          "LangChain",
+          "OpenAI",
+          "RAG",
+          "Computer Vision"
+        ]
+      },
+      {
+        "role": "Data Science & ML Intern",
+        "org": "BrainyBeam Info-Tech",
+        "orgUrl": null,
+        "period": "June 2024 – July 2024",
+        "points": [
+          "Developed an intelligent AQI monitoring system.",
+          "Analyzed PM2.5, PM10, and NO2 parameters using Pandas and scikit-learn."
+        ],
+        "tags": [
+          "Python",
+          "Pandas",
+          "scikit-learn"
+        ]
+      }
+    ],
+    "education": [
+      {
+        "title": "Bachelor of Engineering (IT)",
+        "org": "A D Patel Institute of Technology",
+        "period": "2021 – 2025"
+      },
+      {
+        "title": "Minor Degree (IoT)",
+        "org": "A D Patel Institute of Technology",
+        "period": "2022 – 2024"
+      }
+    ],
+    "certifications": [
+      {
+        "title": "Machine Learning Specialization",
+        "issuer": "DeepLearning.AI & Coursera",
+        "date": "2024",
+        "url": "https://www.coursera.org/account/accomplishments/specialization/P6SUM2UJVZ9S"
+      },
+      {
+        "title": "Code Unnati Innovation Marathon",
+        "issuer": "SAP India & Edunet Foundation",
+        "date": "2024",
+        "url": null
+      },
+      {
+        "title": "SSIP Hackathon Participant",
+        "issuer": "Gujarat State Innovation Program",
+        "date": "2023–2024",
+        "url": null
+      },
+      {
+        "title": "HackerRank Certified",
+        "issuer": "Python & Data Structures",
+        "date": "2023",
+        "url": null
+      }
+    ]
+  },
+  "projects": {
+    "recent": [
+      {
+        "title": "SecureWorkspace",
+        "description": "An open-source encrypted backup and sync app. Python core, Google Drive storage, Windows, Ubuntu and Android.",
+        "links": [
+          {
+            "label": "View on GitHub",
+            "url": "https://github.com/Dadiya-Harsh/SecureWorkspace"
+          }
+        ]
+      }
+    ],
+    "openSource": [
+      {
+        "title": "Found and fixed a startup bug in OpenMontage",
+        "description": "OpenMontage is an open-source agent framework with 81K stars. One of its skills was skipped on startup because its SKILL.md had no YAML frontmatter, and the video-toolkit skill was named in two different ways (kebab-case and snake_case). I reported it, then sent a fix that got merged.",
+        "technologies": [
+          "Python",
+          "YAML",
+          "Agent Frameworks"
+        ],
+        "repoStars": "81K",
+        "links": [
+          {
+            "label": "View issue #192",
+            "url": "https://github.com/OpenMontageInc/OpenMontage/issues/192"
+          },
+          {
+            "label": "View PR #191",
+            "url": "https://github.com/OpenMontageInc/OpenMontage/pull/191"
+          }
+        ]
+      }
+    ],
+    "earlier": [
+      {
+        "title": "Cure Now",
+        "description": "An AI-powered medical chatbot using Google's Gemini AI, with Pinecone for knowledge base search.",
+        "links": [
+          {
+            "label": "GitHub",
+            "url": "https://github.com/Dadiya-Harsh/cure-now/"
+          }
+        ]
+      },
+      {
+        "title": "SQL Agent Tool",
+        "description": "An agent that turns natural language questions into SQL queries.",
+        "links": [
+          {
+            "label": "GitHub",
+            "url": "https://github.com/Dadiya-Harsh/sql-tool/"
+          }
+        ]
+      },
+      {
+        "title": "MCP Implementation",
+        "description": "A Model Context Protocol implementation for LLM communication, with multiple transport layers.",
+        "links": [
+          {
+            "label": "GitHub",
+            "url": "https://github.com/Dadiya-Harsh/MCP-DEMO/"
+          }
+        ]
+      },
+      {
+        "title": "AQI Monitoring",
+        "description": "An air quality monitoring system with real time and historical trends.",
+        "links": [
+          {
+            "label": "GitHub",
+            "url": "https://github.com/Dadiya-Harsh/aqi-monitoring"
+          }
+        ]
+      }
+    ]
+  },
+  "caseStudies": [
+    {
+      "id": "voice-agent",
+      "type": "Voice AI",
+      "title": "Voice Agent Pipeline",
+      "subtitle": "AI-Driven Conversation Orchestration",
+      "role": "AI Engineer",
+      "team": "2 engineers",
+      "duration": "1 month",
+      "techStack": [
+        "Python",
+        "FastAPI",
+        "OpenAI Realtime API",
+        "Twilio",
+        "Redis",
+        "PostgreSQL"
+      ],
+      "desc": "A voice agent that takes real phone calls and talks back in real time. I built it on FastAPI, WebSockets and the OpenAI Realtime API, and it's running in production with real callers.",
+      "bullets": [
+        "Callers can cut in mid-sentence without breaking the call",
+        "The agent checks and updates CRM data while the call is still going"
+      ],
+      "url": "/case-studies/voice-agent",
+      "markdownUrl": "/case-studies/voice-agent.md"
+    },
+    {
+      "id": "generative-video",
+      "type": "Video AI",
+      "title": "Generative Video Pipelines",
+      "subtitle": "Autonomous Multi-Agent Film Production",
+      "role": "AI Engineer",
+      "team": "2 engineers",
+      "duration": "4 months",
+      "techStack": [
+        "Claude Code",
+        "MCP",
+        "Remotion",
+        "Python",
+        "Docker"
+      ],
+      "desc": "Engineered an autonomous AI video production pipeline using Claude Code and Model Context Protocol (MCP) servers. Automates end-to-end video workflows with human-in-the-loop review checkpoints.",
+      "bullets": [
+        "Orchestrated Claude multi-agent pipelines with Remotion (React) for deterministic rendering",
+        "Integrated ElevenLabs, Pexels, and Leonardo-AI via custom MCP instances"
+      ],
+      "url": "/case-studies/generative-video",
+      "markdownUrl": "/case-studies/generative-video.md"
+    }
+  ]
+}

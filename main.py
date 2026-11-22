@@ -1,5 +1,3 @@
-from mcp.server.mcpserver import MCPServer
+from portfolio_mcp.http import app
 
-server = MCPServer(
-    name="",
-)
+__all__ = ["app"]

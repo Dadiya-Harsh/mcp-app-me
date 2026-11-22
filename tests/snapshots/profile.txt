@@ -1,0 +1,6 @@
+Harsh Dadiya, Associate AI Engineer in Ahmedabad. Open to AI Engineer roles. 1.8 years of experience.
+Associate AI Engineer based in Ahmedabad. I build voice agents, RAG pipelines and MCP-based agent workflows in Python, and get them running in production.
+Works on: Voice AI, RAG pipelines, MCP servers, Multi-agent workflows, AWS deployment, Chat systems.
+Case studies: Voice Agent Pipeline (voice-agent), Generative Video Pipelines (generative-video).
+Now building: SecureWorkspace. An open-source encrypted backup and sync app. Python core, Google Drive storage, Windows, Ubuntu and Android. https://github.com/Dadiya-Harsh/SecureWorkspace
+Links: site https://www.harshdadiya.in | GitHub https://github.com/Dadiya-Harsh | LinkedIn https://www.linkedin.com/in/harsh-dadiya/ | Medium https://medium.com/@harshdadiya | resume https://www.harshdadiya.in/resume

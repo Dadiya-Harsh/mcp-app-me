@@ -105,6 +105,12 @@ async def test_fixture_mode_reads_case_study_markdown_from_disk() -> None:
     assert md.startswith("# Real-Time Voice Agent")
 
 
+async def test_case_study_markdown_has_absolute_image_links() -> None:
+    md = await fixture_loader().case_study_md("voice-agent")
+    assert f"]({SITE}/images/voice_agent_architect.png)" in md
+    assert "](/images/" not in md
+
+
 async def test_version_2_is_rejected(
     tmp_path: Path, caplog: pytest.LogCaptureFixture
 ) -> None:

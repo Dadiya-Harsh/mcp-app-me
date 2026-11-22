@@ -25,6 +25,9 @@ SECTION_IDS: dict[str, SectionId] = {
 
 _FENCE = re.compile(r"^\s*(```|~~~)")
 _STEP = re.compile(r"^###\s+(\d+)\.\s+(.+?)\s*$")
+_RULE = re.compile(r"^\s*-{3,}\s*$")
+# the target of a markdown link or image that starts with one "/" (not "//")
+_SITE_RELATIVE = re.compile(r"(\]\()(/(?!/)[^)\s]*)")
 
 
 class Section(BaseModel):
@@ -46,7 +49,36 @@ class ParsedCaseStudy(BaseModel):
 
 
 def _finish(lines: list[str]) -> str:
-    return "\n".join(lines).strip()
+    # The case study files separate their parts with a `---` line. It belongs to the
+    # layout of the page, not to the text, so a rule at the very end is dropped.
+    trimmed = list(lines)
+    while True:
+        while trimmed and not trimmed[-1].strip():
+            trimmed.pop()
+        if trimmed and _RULE.match(trimmed[-1]):
+            trimmed.pop()
+        else:
+            break
+    return "\n".join(trimmed).strip()
+
+
+def absolute_links(markdown: str, site_url: str) -> str:
+    """Make site-relative link and image targets full URLs, so they work outside the site.
+
+    `[text](/case-studies/x)` and `![alt](/images/y.png)` get `site_url` in front.
+    Targets that are already full URLs, `#anchors`, `mailto:` and anything inside a code
+    fence are left alone.
+    """
+    base = site_url.rstrip("/")
+    out: list[str] = []
+    in_fence = False
+    for line in markdown.split("\n"):
+        if _FENCE.match(line):
+            in_fence = not in_fence
+        elif not in_fence:
+            line = _SITE_RELATIVE.sub(lambda m: f"{m.group(1)}{base}{m.group(2)}", line)
+        out.append(line)
+    return "\n".join(out)
 
 
 def split_sections(markdown: str) -> list[Section]:

@@ -1,0 +1,8 @@
+Voice Agent Pipeline
+AI-Driven Conversation Orchestration
+AI Engineer | 2 engineers | 1 month
+
+## Overview
+I built a voice agent that takes real phone calls and talks back in real time. Instead of a menu where you press 1 for support, the caller just talks, can cut in whenever they want, and the agent can look up and update CRM data during the call. It's running in production with real callers.
+
+Read it on the site: https://www.harshdadiya.in/case-studies/voice-agent

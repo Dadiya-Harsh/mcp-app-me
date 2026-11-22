@@ -23,7 +23,7 @@ def create_app(settings: Settings) -> FastAPI:
         level=settings.log_level, format="%(levelname)s %(name)s: %(message)s"
     )
 
-    mcp_app = build_server().streamable_http_app(
+    mcp_app = build_server(settings).streamable_http_app(
         streamable_http_path="/mcp",
         stateless_http=True,
         json_response=True,

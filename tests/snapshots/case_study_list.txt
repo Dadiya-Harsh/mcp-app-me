@@ -1,0 +1,11 @@
+2 case studies. Use get_case_study with the id for the full write-up.
+
+- Voice Agent Pipeline (id: voice-agent) | Voice AI | AI Engineer, 2 engineers, 1 month
+  A voice agent that takes real phone calls and talks back in real time. I built it on FastAPI, WebSockets and the OpenAI Realtime API, and it's running in production with real callers.
+  Stack: Python, FastAPI, OpenAI Realtime API, Twilio, Redis, PostgreSQL
+  https://www.harshdadiya.in/case-studies/voice-agent
+
+- Generative Video Pipelines (id: generative-video) | Video AI | AI Engineer, 2 engineers, 4 months
+  Engineered an autonomous AI video production pipeline using Claude Code and Model Context Protocol (MCP) servers. Automates end-to-end video workflows with human-in-the-loop review checkpoints.
+  Stack: Claude Code, MCP, Remotion, Python, Docker
+  https://www.harshdadiya.in/case-studies/generative-video

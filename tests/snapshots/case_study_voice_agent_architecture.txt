@@ -1,0 +1,22 @@
+Voice Agent Pipeline
+AI-Driven Conversation Orchestration
+AI Engineer | 2 engineers | 1 month
+
+## System Architecture
+![Voice Agent Architecture](https://www.harshdadiya.in/images/voice_agent_architect.png)
+
+I built it around one persistent WebSocket per call instead of the usual request and response over HTTP, so audio can flow both ways at the same time.
+
+### 1. Getting the call in
+Twilio is the entry point. When a call comes in, it sends a signed webhook to my FastAPI server. The server checks the signature, sets up the session for that caller, and opens a WebSocket. Twilio Media Streams then sends the caller's audio over that WebSocket as a continuous stream. The audio arrives as μ-law, so I convert it to PCM16 before passing it on.
+
+### 2. Understanding the caller
+The audio goes to the OpenAI Realtime API, so there's no separate speech-to-text step to wait on. Server-side voice activity detection (VAD) works out when the caller has stopped talking, and the Realtime API handles figuring out what they want and what to do about it.
+
+### 3. Talking to the CRM
+When the agent needs to do something, like checking an order status or validating an account, it calls a tool. The tool makes a direct async call to the CRM API, and the result goes straight back to the agent so it can carry on the conversation.
+
+### 4. Sending the answer back
+The agent's reply comes back as audio. I convert it from PCM16 back to μ-law and stream it out over the same WebSocket, so the caller hears it as it's generated.
+
+Read it on the site: https://www.harshdadiya.in/case-studies/voice-agent

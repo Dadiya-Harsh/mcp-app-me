@@ -1,0 +1,18 @@
+Voice Agent Pipeline
+AI-Driven Conversation Orchestration
+AI Engineer | 2 engineers | 1 month
+
+## What Was Hard
+### Choppy audio
+**The problem:** With the default Python `asyncio` event loop, the audio came out choppy when the server was handling continuous streams of bytes.
+**What I did:** I switched the server to run Uvicorn with `uvloop`, a faster drop-in event loop. That fixed the stutter.
+
+### Letting callers interrupt
+**The problem:** If the agent is in the middle of a long sentence and the caller says "stop, wait", the agent has to stop talking right away, without breaking the call.
+**What I did:** When voice activity shows up while the agent is speaking, I stop playback and clear any audio that was still waiting to be played, so the caller isn't talking over a queue of old audio.
+
+### Keeping session state in one place
+**The problem:** Call state (variables, auth tokens, conversation history) can't just live in one server's memory once calls are spread across several servers. It leads to race conditions.
+**What I did:** I moved the live state to **Redis**, so any server can pick up a call. It's also synced to **PostgreSQL**, which keeps the permanent record for logging.
+
+Read it on the site: https://www.harshdadiya.in/case-studies/voice-agent

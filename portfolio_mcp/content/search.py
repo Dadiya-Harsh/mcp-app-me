@@ -25,6 +25,7 @@ ResultType = Literal[
 ]
 
 _WORD = re.compile(r"[a-z0-9][a-z0-9+#.]*")
+_IMAGE = re.compile(r"!\[[^\]]*\]\([^)]*\)")
 
 
 class SearchResult(BaseModel):
@@ -140,7 +141,7 @@ def _documents(content: Content, case_study_markdown: Mapping[str, str]) -> list
 
 
 def _snippet(text: str, patterns: list[re.Pattern[str]]) -> str:
-    flat = " ".join(text.split())
+    flat = " ".join(_IMAGE.sub("", text).split())  # a picture is no use in a snippet
     first = min(
         (m.start() for pat in patterns if (m := pat.search(flat.lower()))), default=0
     )

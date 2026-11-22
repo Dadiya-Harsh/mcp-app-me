@@ -1,0 +1,21 @@
+Top 5 matches for "voice":
+
+1. [case-study] Voice Agent Pipeline: System Architecture
+   ...e's no separate speech-to-text step to wait on. Server-side voice activity detection (VAD) works out when the caller has stopped talking, and the Realtime API handles figuring out...
+   https://www.harshdadiya.in/case-studies/voice-agent
+
+2. [case-study] Voice Agent Pipeline
+   AI-Driven Conversation Orchestration Voice AI A voice agent that takes real phone calls and talks back in real time. I built it on FastAPI, WebSockets and the OpenAI Realtime API,...
+   https://www.harshdadiya.in/case-studies/voice-agent
+
+3. [case-study] Voice Agent Pipeline: The Problem
+   ...ton or wait for a beep, then the system answers. Even newer voice bots tend to feel slow, and they don't know much about who is calling or what they need. The harder part was getti...
+   https://www.harshdadiya.in/case-studies/voice-agent
+
+4. [case-study] Voice Agent Pipeline: Overview
+   I built a voice agent that takes real phone calls and talks back in real time. Instead of a menu where you press 1 for support, the caller just talks, can cut in whenever they want...
+   https://www.harshdadiya.in/case-studies/voice-agent
+
+5. [case-study] Voice Agent Pipeline: What Was Hard
+   ...right away, without breaking the call. **What I did:** When voice activity shows up while the agent is speaking, I stop playback and clear any audio that was still waiting to be pl...
+   https://www.harshdadiya.in/case-studies/voice-agent

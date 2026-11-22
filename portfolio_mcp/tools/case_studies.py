@@ -2,7 +2,7 @@
 
 from typing import Annotated, Any, Literal
 
-from mcp.server.mcpserver import MCPServer
+from mcp.server.apps import Apps
 from mcp.types import CallToolResult
 from pydantic import Field
 
@@ -12,6 +12,7 @@ from portfolio_mcp.content.markdown import parse_case_study
 from portfolio_mcp.content.models import CaseStudy
 from portfolio_mcp.deps import Deps
 from portfolio_mcp.tools._common import READ_ONLY, dump, fail, guarded, ok
+from portfolio_mcp.ui_html import UI_URI
 
 SectionName = Literal["overview", "problem", "architecture", "hard", "result", "all"]
 
@@ -24,10 +25,15 @@ def case_study_meta(study: CaseStudy) -> dict[str, Any]:
 
 
 async def list_result(deps: Deps) -> CallToolResult:
-    studies = (await deps.loader.content()).case_studies
+    content = await deps.loader.content()
+    studies = content.case_studies
     return ok(
         text.case_study_list(studies),
-        {"caseStudies": [case_study_meta(s) for s in studies]},
+        # siteUrl is for the UI's "All on site" link
+        {
+            "caseStudies": [case_study_meta(s) for s in studies],
+            "siteUrl": content.site_url,
+        },
     )
 
 
@@ -69,8 +75,11 @@ async def case_study_result(
     return ok(text.case_study(study, chosen), data)
 
 
-def register(mcp: MCPServer, deps: Deps) -> None:
-    @mcp.tool(
+def register_ui(apps: Apps, deps: Deps) -> None:
+    """Both tools show the UI: the case study list and the viewer."""
+
+    @apps.tool(
+        resource_uri=UI_URI,
         name="list_case_studies",
         title="Harsh's case studies",
         description=(
@@ -83,7 +92,8 @@ def register(mcp: MCPServer, deps: Deps) -> None:
     async def list_case_studies() -> CallToolResult:
         return await guarded(list_result(deps))
 
-    @mcp.tool(
+    @apps.tool(
+        resource_uri=UI_URI,
         name="get_case_study",
         title="Read a case study",
         description=(

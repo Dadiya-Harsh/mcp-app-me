@@ -79,7 +79,9 @@ async def test_projects_resource(client: Caller) -> None:
 async def test_case_study_index_matches_the_tool(client: Caller) -> None:
     from_resource = await read_json(client, "portfolio://case-studies")
     from_tool = (await client.call_tool("list_case_studies")).structured_content
-    assert from_resource == from_tool
+    assert from_tool is not None
+    # the tool also has siteUrl, which only the UI uses
+    assert from_resource["caseStudies"] == from_tool["caseStudies"]
 
 
 async def test_resume_resource_matches_the_tool(client: Caller) -> None:

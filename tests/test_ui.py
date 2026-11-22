@@ -17,15 +17,28 @@ def test_built_ui_is_committed() -> None:
     assert '<link rel="stylesheet"' not in html
 
 
-async def test_get_profile_points_at_the_ui(client: Caller) -> None:
+UI_TOOLS = {"get_profile", "list_case_studies", "get_case_study", "list_projects"}
+
+
+async def test_ui_tools_point_at_the_ui(client: Caller) -> None:
     tools = {t.name: t for t in (await client.list_tools()).tools}
-    meta: dict[str, Any] = tools["get_profile"].meta or {}
-    assert meta["ui"]["resourceUri"] == UI_URI
-    # no other tool shows the UI yet (M5 and M6 add theirs)
+    for name in UI_TOOLS:
+        meta: dict[str, Any] = tools[name].meta or {}
+        assert meta["ui"]["resourceUri"] == UI_URI, name
+    # everything else stays plain text (the contact screen comes in M6)
     others = {
-        n for n, t in tools.items() if n != "get_profile" and "ui" in (t.meta or {})
+        n for n, t in tools.items() if n not in UI_TOOLS and "ui" in (t.meta or {})
     }
     assert others == set()
+
+
+async def test_ui_tools_are_open_to_the_model_and_the_app(client: Caller) -> None:
+    # The UI calls get_case_study and list_projects itself (tabs, "show all"). Hosts
+    # only allow that for tools whose visibility includes "app". Unset means both.
+    tools = {t.name: t for t in (await client.list_tools()).tools}
+    for name in UI_TOOLS:
+        visibility = ((tools[name].meta or {}).get("ui") or {}).get("visibility")
+        assert visibility in (None, ["model", "app"]), name
 
 
 async def test_ui_resource(client: Caller) -> None:
@@ -49,3 +62,16 @@ async def test_get_profile_still_returns_text_and_data(client: Caller) -> None:
     assert not result.is_error
     assert result.content and result.structured_content
     assert result.structured_content["name"] == "Harsh Dadiya"
+
+
+async def test_case_study_and_project_tools_still_return_text_and_data(
+    client: Caller,
+) -> None:
+    for name, args in (
+        ("list_case_studies", {}),
+        ("get_case_study", {"id": "voice-agent", "section": "hard"}),
+        ("list_projects", {"group": "recent"}),
+    ):
+        result = await client.call_tool(name, args)
+        assert not result.is_error, name
+        assert result.content and result.structured_content, name
